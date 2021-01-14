@@ -1,0 +1,21 @@
+fr:
+  js:
+    composer:
+      underline_ui_button_title: "Souligner du texte"
+      underline_ui_default_text: "Texte"
+      color_ui_button_title: "Colorer un texte"
+      color_ui_default_text: "Texte"
+      addimg_ui_button_title: "Ajouter une image"
+      addimg_ui_default_text: "http://"
+      floatl_ui_button_title: "Ajouter du contenu à gauche de votre texte"
+      floatl_ui_default_text: "Image"
+      left_ui_button_title: "Aligner votre texte à gauche"
+      left_ui_default_text: "Texte"
+      center_ui_button_title: "Centrer une image ou du texte"
+      center_ui_default_text: "Texte"
+      right_ui_button_title: "Aligner votre texte à droite"
+      right_ui_default_text: "Texte"
+      justify_ui_button_title: "Justifier votre texte"
+      justify_ui_default_text: "Texte"
+      size_ui_button_title: "Changer la taille du texte"
+      size_ui_default_text: "Texte"

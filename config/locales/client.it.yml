@@ -1,0 +1,19 @@
+it:
+  js:
+    composer:
+      underline_ui_button_title: "Sottolinea testo"
+      underline_ui_default_text: "Testo"
+      color_ui_button_title: "Colora testo"
+      color_ui_default_text: "Testo"
+      addimg_ui_button_title: "Aggiungi immagine"
+      addimg_ui_default_text: "http://"
+      floatl_ui_button_title: "Aggiungi contenuto a sinistra"
+      floatl_ui_default_text: "Immagine"
+      left_ui_button_title: "Allinea a destra sinistra"
+      left_ui_default_text: "Testo"
+      center_ui_button_title: "Centra il contenuto"
+      center_ui_default_text: "Testo"
+      right_ui_button_title: "Allinea a destra"
+      right_ui_default_text: "Testo"
+      justify_ui_button_title: "Giustifica il testo"
+      justify_ui_default_text: "Testo"

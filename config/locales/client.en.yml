@@ -1,0 +1,21 @@
+en:
+  js:
+    composer:
+      underline_ui_button_title: "Underline text"
+      underline_ui_default_text: "Text"
+      color_ui_button_title: "Color text"
+      color_ui_default_text: "Text"
+      addimg_ui_button_title: "Add an image"
+      addimg_ui_default_text: "http://"
+      floatl_ui_button_title: "Add content in the left"
+      floatl_ui_default_text: "Image"
+      left_ui_button_title: "Align to the left"
+      left_ui_default_text: "Text"
+      center_ui_button_title: "Center content"
+      center_ui_default_text: "Text"
+      right_ui_button_title: "Align to the right"
+      right_ui_default_text: "Text"
+      justify_ui_button_title: "Justify a text"
+      justify_ui_default_text: "Text"
+      size_ui_button_title: "Change the size of your text"
+      size_ui_default_text: "Text"
