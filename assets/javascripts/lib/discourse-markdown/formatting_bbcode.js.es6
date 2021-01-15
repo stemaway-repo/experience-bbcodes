@@ -18,6 +18,29 @@ function replaceFontSize (text) {
   return text;
 }
 
+function replaceTitle (text) {
+  while (text !== (text = text.replace(/\[title\](.+?)\[\/title\]/ig, function (match, p) {
+    return `<span class="job-title">My title: ${p}</span>`;
+  })));
+  return text;
+}
+
+function replaceJob (text) {
+  console.log("replaceJob");
+  while (text !== (text = text.replace(/\[job\](.+?)\[\/job\]/igm, function (match, p) {
+    return `<div class="job">${p}</div>`;
+  })));
+  return text;
+}
+
+function replaceInstitution (text) {
+  console.log("replaceInstitution");
+  while (text !== (text = text.replace(/\[institution\](.+?)\[\/institution\]/igm, function (match, p) {
+    return `<div class="job">${p}</div>`;
+  })));
+  return text;
+}
+
 function wrap(tag, attr, callback) {
   return function(startToken, finishToken, tagInfo) {
     startToken.tag = finishToken.tag = tag;
@@ -49,6 +72,26 @@ function setupMarkdownIt(md) {
   ruler.push('small',{
     tag: 'small',
     wrap: wrap('span', 'style', ()=>'font-size:x-small')
+  });
+
+  ruler.push('title',{
+    tag: 'title',
+    wrap: wrap('span', 'class', ()=>'title')
+  });
+
+  ruler.push('institution',{
+    tag: 'institution',
+    wrap: wrap('span', 'class', ()=>'institution')
+  });
+
+  ruler.push('job',{
+    tag: 'job',
+    wrap: wrap('div', 'class', ()=>'job')
+  });
+
+  ruler.push('start-date',{
+    tag: 'start-date',
+    wrap: wrap('div', 'class', ()=>'start-date')
   });
 
   ruler.push('floatl', {
@@ -99,6 +142,11 @@ export function setup(helper) {
     'div.bbcoderight',
     'div.bbcodejustify',
     'font[color=*]',
+    'div.job',
+    'div.title',
+    'span.title',
+    'span.job',
+    'span.institution',
     'font[size=*]'
   ]);
 
@@ -120,6 +168,15 @@ export function setup(helper) {
   const builders = requirejs('pretty-text/engines/discourse-markdown/bbcode').builders;
   const { register, replaceBBCode, rawBBCode, replaceBBCodeParamsRaw } = builders(helper);
 
+  replaceBBCode("job", contents => ['div', {'class': 'job'}].concat(contents));
+  replaceBBCode("title", contents => ['div', {'class': 'title'}].concat(contents));
+  replaceBBCode("institution", contents => ['div', {'class': 'institution'}].concat(contents));
+  replaceBBCode("start-date", contents => ['div', {'class': 'start-date'}].concat(contents));
+  replaceBBCode("end-date", contents => ['div', {'class': 'end-date'}].concat(contents));
+  replaceBBCode("dates", contents => ['div', {'class': 'dates'}].concat(contents));
+  replaceBBCode("description", contents => ['div', {'class': 'job-description'}].concat(contents));
+  replaceBBCode("media", contents => ['div', {'class': 'job-media'}].concat(contents));
+  
   replaceBBCode("small", contents => ['span', {'style': 'font-size:x-small'}].concat(contents));
   replaceBBCode("floatl", contents => ['div', {'class': 'floatl'}].concat(contents));
   replaceBBCode("floatr", contents => ['div', {'class': 'floatr'}].concat(contents));
@@ -129,7 +186,11 @@ export function setup(helper) {
   replaceBBCode("right", contents => ['div', {'class': 'bbcoderight'}].concat(contents));
   replaceBBCode("justify", contents => ['div', {'class': 'bbcodejustify'}].concat(contents));
 
+
+
   helper.addPreProcessor(replaceFontColor);
   helper.addPreProcessor(replaceFontSize);
+  helper.addPreProcessor(replaceJob);
+  helper.addPreProcessor(replaceTitle);
 
 }
