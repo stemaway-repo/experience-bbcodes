@@ -1,47 +1,40 @@
 import { registerOption } from 'pretty-text/pretty-text';
+import { parseBBCodeTag } from "pretty-text/engines/discourse-markdown/bbcode-block";
+
 
 registerOption(
   (siteSettings, opts) => (opts.features["formatting_bbcode"] = true)
 );
 
-function replaceFontColor (text) {
-  while (text !== (text = text.replace(/\[color=([^\]]+)\]((?:(?!\[color=[^\]]+\]|\[\/color\])[\S\s])*)\[\/color\]/ig, function (match, p1, p2) {
-    return `<font color='${p1}'>${p2}</font>`;
-  })));
-  return text;
-}
-
-function replaceFontSize (text) {
-  while (text !== (text = text.replace(/\[size=([^\]]+)\]((?:(?!\[size=[^\]]+\]|\[\/size\])[\S\s])*)\[\/size\]/ig, function (match, p1, p2) {
-    return `<font size='${p1}'>${p2}</font>`;
-  })));
-  return text;
-}
-
 function replaceTitle (text) {
   while (text !== (text = text.replace(/\[title\](.+?)\[\/title\]/ig, function (match, p) {
-    return `<span class="job-title">My title: ${p}</span>`;
+    return `<div class="job-title">${p}</div>`;
+  })));
+  return text;
+}
+
+function replaceType (text) {
+  while (text !== (text = text.replace(/\[type\](.+?)\[\/type\]/ig, function (match, p) {
+    return `<div class="type">${p}</div>`;
   })));
   return text;
 }
 
 function replaceJob (text) {
-  console.log("replaceJob");
-  while (text !== (text = text.replace(/\[job\](.+?)\[\/job\]/igm, function (match, p) {
+  while (text !== (text = text.replace(/\[job\]([\s\S]*?)\[\/job\]/igm, function (match, p) {
     return `<div class="job">${p}</div>`;
   })));
   return text;
 }
-function replaceActivity (text) {
-  console.log("replace");
-  while (text !== (text = text.replace(/\[activity\](.+?)\[\/activity\]/igm, function (match, p) {
+
+function replaceSchool (text) {
+  while (text !== (text = text.replace(/\[school\]([\s\S]*?)\[\/school\]/igm, function (match, p) {
     return `<div class="job">${p}</div>`;
   })));
   return text;
 }
 
 function replaceInstitution (text) {
-  console.log("replaceInstitution");
   while (text !== (text = text.replace(/\[institution\](.+?)\[\/institution\]/igm, function (match, p) {
     return `<div class="institution">${p}</div>`;
   })));
@@ -66,7 +59,7 @@ function replaceLocation (text) {
 
 function replaceDates (text) {
   console.log("replaceDates");
-  while (text !== (text = text.replace(/\[dates\](.+?)\[\/dates\]/igm, function (match, p) {
+  while (text !== (text = text.replace(/\[dates\]DATES:(.+?)\[\/dates\]/igm, function (match, p) {
     return `<div class="dates">${p}</div>`;
   })));
   return text;
@@ -74,7 +67,7 @@ function replaceDates (text) {
 
 function replaceDescription (text) {
   console.log("replaceDescription");
-  while (text !== (text = text.replace(/\[description\](.+?)\[\/description\]/igm, function (match, p) {
+  while (text !== (text = text.replace(/\[description\]([\s\S]*?)\[\/description\]/igm, function (match, p) {
     return `<div class="description">${p}</div>`;
   })));
   return text;
@@ -97,6 +90,7 @@ function wrap(tag, attr, callback) {
 
 function setupMarkdownIt(md) {
   const ruler = md.inline.bbcode.ruler;
+  const blockRuler = md.block.bbcode.ruler;
 
   ruler.push('size', {
     tag: 'size',
@@ -115,7 +109,12 @@ function setupMarkdownIt(md) {
 
   ruler.push('title',{
     tag: 'title',
-    wrap: wrap('span', 'class', ()=>'title')
+    wrap: wrap('div', 'class', ()=>'job-title')
+  });
+
+  ruler.push('type',{
+    tag: 'type',
+    wrap: wrap('div', 'class', ()=>'type')
   });
 
   ruler.push('institution',{
@@ -133,31 +132,75 @@ function setupMarkdownIt(md) {
     wrap: wrap('div', 'class', ()=>'location')
   });
 
-
   ruler.push('dates',{
     tag: 'dates',
     wrap: wrap('div', 'class', ()=>'dates')
   });
 
-  ruler.push('description',{
-    tag: 'description',
-    wrap: wrap('div', 'class', ()=>'description')
-  });
+  function camelCaseToDash(str) {
+    return str.replace(/([a-zA-Z])(?=[A-Z])/g, "$1-").toLowerCase();
+  }
 
-  ruler.push('job',{
+  function parseAttributes(tagInfo) {
+    const attributes = tagInfo.attrs._default || "";
+  
+    return (
+      parseBBCodeTag(`[wrap wrap=${attributes}]`, 0, attributes.length + 12)
+        .attrs || {}
+    );
+  }
+  
+
+  function applyDataAttributes(token, state, attributes) {
+    Object.keys(attributes).forEach((tag) => {
+      const value = state.md.utils.escapeHtml(attributes[tag]);
+      tag = camelCaseToDash(
+        state.md.utils.escapeHtml(tag.replace(/[^A-Za-z\-0-9]/g, ""))
+      );
+  
+      if (value && tag && tag.length > 1) {
+        token.attrs.push([`data-${tag}`, value]);
+      }
+    });
+  }
+
+  blockRuler.push('block-job',{
     tag: 'job',
-    wrap: wrap('div', 'class', ()=>'job')
+    before(state, tagInfo) {
+      let token = state.push("job_open", "div", 1);
+      token.attrs = [["class", "job"]];
+      applyDataAttributes(token, state, parseAttributes(tagInfo));
+    },
+    after(state) {
+      state.push("job_close", "div", -1);
+    },
   });
 
-  ruler.push('activity',{
-    tag: 'activity',
-    wrap: wrap('div', 'class', ()=>'job')
+  blockRuler.push('block-description',{
+    tag: 'description',
+    before(state, tagInfo) {
+      let token = state.push("description_open", "div", 1);
+      token.attrs = [["class", "description"]];
+      applyDataAttributes(token, state, parseAttributes(tagInfo));
+    },
+    after(state) {
+      state.push("description_close", "div", -1);
+    },
   });
 
-  ruler.push('start-date',{
-    tag: 'start-date',
-    wrap: wrap('div', 'class', ()=>'start-date')
+  blockRuler.push('block-school',{
+    tag: 'school',
+    before(state, tagInfo) {
+      let token = state.push("school_open", "div", 1);
+      token.attrs = [["class", "job"]];
+      applyDataAttributes(token, state, parseAttributes(tagInfo));
+    },
+    after(state) {
+      state.push("school_close", "div", -1);
+    },
   });
+
+
 
   ruler.push('floatl', {
     tag: 'floatl',
@@ -207,10 +250,8 @@ export function setup(helper) {
     'div.bbcoderight',
     'div.bbcodejustify',
     'font[color=*]',
-    'div.job',
-    'div.title',
-    'span.title',
-    'span.job',
+    'div.job-title',
+    'div.type',
     'div.institution',
     'div.dates',
     'div.description',
@@ -239,8 +280,10 @@ export function setup(helper) {
 
   // these fix code in cooked post
   replaceBBCode("job", contents => ['div', {'class': 'job'}].concat(contents));
+  replaceBBCode("school", contents => ['div', {'class': 'job'}].concat(contents));
   replaceBBCode("activity", contents => ['div', {'class': 'job'}].concat(contents));
-  replaceBBCode("title", contents => ['div', {'class': 'title'}].concat(contents));
+  replaceBBCode("title", contents => ['div', {'class': 'job-title'}].concat(contents));
+  replaceBBCode("type", contents => ['div', {'class': 'type'}].concat(contents));
   replaceBBCode("institution", contents => ['div', {'class': 'institution'}].concat(contents));
   replaceBBCode("logo", contents => ['div', {'class': 'logo'}].concat(contents));
   replaceBBCode("dates", contents => ['div', {'class': 'dates'}].concat(contents));
@@ -250,21 +293,13 @@ export function setup(helper) {
   replaceBBCode("dates", contents => ['div', {'class': 'dates'}].concat(contents));
   replaceBBCode("description", contents => ['div', {'class': 'job-description'}].concat(contents));
   replaceBBCode("media", contents => ['div', {'class': 'job-media'}].concat(contents));
-  
-  replaceBBCode("small", contents => ['span', {'style': 'font-size:x-small'}].concat(contents));
-  replaceBBCode("floatl", contents => ['div', {'class': 'floatl'}].concat(contents));
-  replaceBBCode("floatr", contents => ['div', {'class': 'floatr'}].concat(contents));
-  replaceBBCode("floatc", contents => ['div', {'class': 'floatc'}].concat(contents));
-  replaceBBCode("left", contents => ['div', {'class': 'bbcodeleft'}].concat(contents));
-  replaceBBCode("center", contents => ['div', {'class': 'bbcodecenter'}].concat(contents));
-  replaceBBCode("right", contents => ['div', {'class': 'bbcoderight'}].concat(contents));
-  replaceBBCode("justify", contents => ['div', {'class': 'bbcodejustify'}].concat(contents));
-
 
 // these fix display in the composer preview window
   helper.addPreProcessor(replaceFontColor);
   helper.addPreProcessor(replaceFontSize);
   helper.addPreProcessor(replaceJob);
+  helper.addPreProcessor(replaceType);
+  helper.addPreProcessor(replaceSchool);
   helper.addPreProcessor(replaceActivity);
   helper.addPreProcessor(replaceInstitution);
   helper.addPreProcessor(replaceTitle);
