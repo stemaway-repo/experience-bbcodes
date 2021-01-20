@@ -36,7 +36,14 @@ function replaceJob (text) {
 function replaceInstitution (text) {
   console.log("replaceInstitution");
   while (text !== (text = text.replace(/\[institution\](.+?)\[\/institution\]/igm, function (match, p) {
-    return `<div class="job">${p}</div>`;
+    return `<div class="institution">${p}</div>`;
+  })));
+  return text;
+}
+function replaceLogo (text) {
+  console.log("replaceLogo");
+  while (text !== (text = text.replace(/\[logo\](.+?)\[\/logo\]/igm, function (match, p) {
+    return `<div class="logo">${p}</div>`;
   })));
   return text;
 }
@@ -81,7 +88,12 @@ function setupMarkdownIt(md) {
 
   ruler.push('institution',{
     tag: 'institution',
-    wrap: wrap('span', 'class', ()=>'institution')
+    wrap: wrap('div', 'class', ()=>'institution')
+  });
+
+  ruler.push('logo',{
+    tag: 'logo',
+    wrap: wrap('div', 'class', ()=>'logo')
   });
 
   ruler.push('job',{
@@ -146,7 +158,8 @@ export function setup(helper) {
     'div.title',
     'span.title',
     'span.job',
-    'span.institution',
+    'div.institution',
+    'div.logo',
     'font[size=*]'
   ]);
 
@@ -168,9 +181,11 @@ export function setup(helper) {
   const builders = requirejs('pretty-text/engines/discourse-markdown/bbcode').builders;
   const { register, replaceBBCode, rawBBCode, replaceBBCodeParamsRaw } = builders(helper);
 
+  // these fix code in cooked post
   replaceBBCode("job", contents => ['div', {'class': 'job'}].concat(contents));
   replaceBBCode("title", contents => ['div', {'class': 'title'}].concat(contents));
   replaceBBCode("institution", contents => ['div', {'class': 'institution'}].concat(contents));
+  replaceBBCode("logo", contents => ['div', {'class': 'logo'}].concat(contents));
   replaceBBCode("start-date", contents => ['div', {'class': 'start-date'}].concat(contents));
   replaceBBCode("end-date", contents => ['div', {'class': 'end-date'}].concat(contents));
   replaceBBCode("dates", contents => ['div', {'class': 'dates'}].concat(contents));
@@ -187,10 +202,12 @@ export function setup(helper) {
   replaceBBCode("justify", contents => ['div', {'class': 'bbcodejustify'}].concat(contents));
 
 
-
+// these fix display in the composer preview window
   helper.addPreProcessor(replaceFontColor);
   helper.addPreProcessor(replaceFontSize);
   helper.addPreProcessor(replaceJob);
+  helper.addPreProcessor(replaceInstitution);
   helper.addPreProcessor(replaceTitle);
+  helper.addPreProcessor(replaceLogo);
 
 }
