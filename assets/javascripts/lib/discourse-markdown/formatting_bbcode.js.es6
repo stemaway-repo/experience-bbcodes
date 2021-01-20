@@ -32,6 +32,13 @@ function replaceJob (text) {
   })));
   return text;
 }
+function replaceActivity (text) {
+  console.log("replace");
+  while (text !== (text = text.replace(/\[activity\](.+?)\[\/activity\]/igm, function (match, p) {
+    return `<div class="job">${p}</div>`;
+  })));
+  return text;
+}
 
 function replaceInstitution (text) {
   console.log("replaceInstitution");
@@ -40,10 +47,19 @@ function replaceInstitution (text) {
   })));
   return text;
 }
+
 function replaceLogo (text) {
   console.log("replaceLogo");
   while (text !== (text = text.replace(/\[logo\](.+?)\[\/logo\]/igm, function (match, p) {
     return `<div class="logo">${p}</div>`;
+  })));
+  return text;
+}
+
+function replaceLocation (text) {
+  console.log("replaceLocation");
+  while (text !== (text = text.replace(/\[location\](.+?)\[\/location\]/igm, function (match, p) {
+    return `<div class="location">${p}</div>`;
   })));
   return text;
 }
@@ -112,6 +128,11 @@ function setupMarkdownIt(md) {
     wrap: wrap('div', 'class', ()=>'logo')
   });
 
+  ruler.push('location',{
+    tag: 'location',
+    wrap: wrap('div', 'class', ()=>'location')
+  });
+
 
   ruler.push('dates',{
     tag: 'dates',
@@ -125,6 +146,11 @@ function setupMarkdownIt(md) {
 
   ruler.push('job',{
     tag: 'job',
+    wrap: wrap('div', 'class', ()=>'job')
+  });
+
+  ruler.push('activity',{
+    tag: 'activity',
     wrap: wrap('div', 'class', ()=>'job')
   });
 
@@ -189,6 +215,7 @@ export function setup(helper) {
     'div.dates',
     'div.description',
     'div.logo',
+    'div.location',
     'font[size=*]'
   ]);
 
@@ -212,6 +239,7 @@ export function setup(helper) {
 
   // these fix code in cooked post
   replaceBBCode("job", contents => ['div', {'class': 'job'}].concat(contents));
+  replaceBBCode("activity", contents => ['div', {'class': 'job'}].concat(contents));
   replaceBBCode("title", contents => ['div', {'class': 'title'}].concat(contents));
   replaceBBCode("institution", contents => ['div', {'class': 'institution'}].concat(contents));
   replaceBBCode("logo", contents => ['div', {'class': 'logo'}].concat(contents));
@@ -237,9 +265,11 @@ export function setup(helper) {
   helper.addPreProcessor(replaceFontColor);
   helper.addPreProcessor(replaceFontSize);
   helper.addPreProcessor(replaceJob);
+  helper.addPreProcessor(replaceActivity);
   helper.addPreProcessor(replaceInstitution);
   helper.addPreProcessor(replaceTitle);
   helper.addPreProcessor(replaceLogo);
+  helper.addPreProcessor(replaceLocation);
   helper.addPreProcessor(replaceDates);
   helper.addPreProcessor(replaceDescription);
 
