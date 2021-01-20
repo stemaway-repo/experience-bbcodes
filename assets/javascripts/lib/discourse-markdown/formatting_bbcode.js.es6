@@ -48,6 +48,22 @@ function replaceLogo (text) {
   return text;
 }
 
+function replaceDates (text) {
+  console.log("replaceDates");
+  while (text !== (text = text.replace(/\[dates\](.+?)\[\/dates\]/igm, function (match, p) {
+    return `<div class="dates">${p}</div>`;
+  })));
+  return text;
+}
+
+function replaceDescription (text) {
+  console.log("replaceDescription");
+  while (text !== (text = text.replace(/\[description\](.+?)\[\/description\]/igm, function (match, p) {
+    return `<div class="description">${p}</div>`;
+  })));
+  return text;
+}
+
 function wrap(tag, attr, callback) {
   return function(startToken, finishToken, tagInfo) {
     startToken.tag = finishToken.tag = tag;
@@ -94,6 +110,17 @@ function setupMarkdownIt(md) {
   ruler.push('logo',{
     tag: 'logo',
     wrap: wrap('div', 'class', ()=>'logo')
+  });
+
+
+  ruler.push('dates',{
+    tag: 'dates',
+    wrap: wrap('div', 'class', ()=>'dates')
+  });
+
+  ruler.push('description',{
+    tag: 'description',
+    wrap: wrap('div', 'class', ()=>'description')
   });
 
   ruler.push('job',{
@@ -159,6 +186,8 @@ export function setup(helper) {
     'span.title',
     'span.job',
     'div.institution',
+    'div.dates',
+    'div.description',
     'div.logo',
     'font[size=*]'
   ]);
@@ -186,6 +215,8 @@ export function setup(helper) {
   replaceBBCode("title", contents => ['div', {'class': 'title'}].concat(contents));
   replaceBBCode("institution", contents => ['div', {'class': 'institution'}].concat(contents));
   replaceBBCode("logo", contents => ['div', {'class': 'logo'}].concat(contents));
+  replaceBBCode("dates", contents => ['div', {'class': 'dates'}].concat(contents));
+  replaceBBCode("description", contents => ['div', {'class': 'description'}].concat(contents));
   replaceBBCode("start-date", contents => ['div', {'class': 'start-date'}].concat(contents));
   replaceBBCode("end-date", contents => ['div', {'class': 'end-date'}].concat(contents));
   replaceBBCode("dates", contents => ['div', {'class': 'dates'}].concat(contents));
@@ -209,5 +240,7 @@ export function setup(helper) {
   helper.addPreProcessor(replaceInstitution);
   helper.addPreProcessor(replaceTitle);
   helper.addPreProcessor(replaceLogo);
+  helper.addPreProcessor(replaceDates);
+  helper.addPreProcessor(replaceDescription);
 
 }
