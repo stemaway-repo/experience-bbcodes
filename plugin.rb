@@ -1,4 +1,4 @@
-# name: discourse-formatting-toolbar
+# name: stemaway-experience-bbcodes
 # about: Add formatting options on your post (Discourse)
 # version: 3.2
 # authors: Steven, iunctis.fr - Thanks to ZogStrip, eviltrout, cpradio and Sam Saffron
