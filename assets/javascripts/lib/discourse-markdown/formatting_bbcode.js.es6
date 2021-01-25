@@ -119,6 +119,11 @@ function setupMarkdownIt(md) {
     wrap: wrap('div', 'class', ()=>'job-title')
   });
 
+  ruler.push('degree',{
+    tag: 'degree',
+    wrap: wrap('div', 'class', ()=>'degree')
+  });
+
   ruler.push('company',{
     tag: 'company',
     wrap: wrap('div', 'class', ()=>'company')
@@ -127,6 +132,11 @@ function setupMarkdownIt(md) {
   ruler.push('institution',{
     tag: 'institution',
     wrap: wrap('div', 'class', ()=>'institution')
+  });
+
+  ruler.push('grade',{
+    tag: 'grade',
+    wrap: wrap('div', 'class', ()=>'grade')
   });
 
   ruler.push('type',{
@@ -270,6 +280,8 @@ export function setup(helper) {
     'div.job-container',
     'div.job-title',
     'div.company',
+    'div.degree',
+    'div.grade',
     'div.type',
     'div.institution',
     'div.dates',
@@ -305,6 +317,8 @@ export function setup(helper) {
   replaceBBCode("title", contents => ['div', {'class': 'job-title'}].concat(contents));
   replaceBBCode("type", contents => ['div', {'class': 'type'}].concat(contents));
   replaceBBCode("institution", contents => ['div', {'class': 'institution'}].concat(contents));
+  replaceBBCode("degree", contents => ['div', {'class': 'degree'}].concat(contents));
+  replaceBBCode("grade", contents => ['div', {'class': 'grade'}].concat(contents));
   replaceBBCode("logo", contents => ['div', {'class': 'logo'}].concat(contents));
   replaceBBCode("dates", contents => ['div', {'class': 'dates'}].concat(contents));
   replaceBBCode("description", contents => ['div', {'class': 'description'}].concat(contents));
@@ -320,6 +334,8 @@ export function setup(helper) {
   helper.addPreProcessor(replaceJob);
   helper.addPreProcessor(replaceType);
   helper.addPreProcessor(replaceSchool);
+  helper.addPreProcessor(replaceGrade);
+  helper.addPreProcessor(replaceDegree);
   helper.addPreProcessor(replaceCompany);
   helper.addPreProcessor(replaceActivity);
   helper.addPreProcessor(replaceInstitution);
