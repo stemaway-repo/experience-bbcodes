@@ -36,7 +36,7 @@ function replaceJob (text) {
 
 function replaceSchool (text) {
   while (text !== (text = text.replace(/\[school\]([\s\S]*?)\[\/school\]/igm, function (match, p) {
-    return `<div class="job">${p}</div>`;
+    return `<div class="school">${p}</div>`;
   })));
   return text;
 }
@@ -219,7 +219,7 @@ function setupMarkdownIt(md) {
     tag: 'school',
     before(state, tagInfo) {
       let token = state.push("school_open", "div", 1);
-      token.attrs = [["class", "job"]];
+      token.attrs = [["class", "school"]];
       applyDataAttributes(token, state, parseAttributes(tagInfo));
     },
     after(state) {
@@ -279,6 +279,8 @@ export function setup(helper) {
     'font[color=*]',
     'div.job-container',
     'div.job-title',
+    'div.job',
+    'div.school',
     'div.company',
     'div.degree',
     'div.grade',
@@ -311,7 +313,7 @@ export function setup(helper) {
 
   // these fix code in cooked post
   replaceBBCode("job", contents => ['div', {'class': 'job'}].concat(contents));
-  replaceBBCode("school", contents => ['div', {'class': 'job'}].concat(contents));
+  replaceBBCode("school", contents => ['div', {'class': 'school'}].concat(contents));
   replaceBBCode("company", contents => ['div', {'class': 'company'}].concat(contents));
   replaceBBCode("activity", contents => ['div', {'class': 'job'}].concat(contents));
   replaceBBCode("title", contents => ['div', {'class': 'job-title'}].concat(contents));
