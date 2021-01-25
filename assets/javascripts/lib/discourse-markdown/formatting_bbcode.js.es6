@@ -13,6 +13,13 @@ function replaceTitle (text) {
   return text;
 }
 
+function replaceCompany (text) {
+  while (text !== (text = text.replace(/\[company\](.+?)\[\/company\]/ig, function (match, p) {
+    return `<div class="company">${p}</div>`;
+  })));
+  return text;
+}
+
 function replaceType (text) {
   while (text !== (text = text.replace(/\[type\](.+?)\[\/type\]/ig, function (match, p) {
     return `<div class="type">${p}</div>`;
@@ -22,7 +29,7 @@ function replaceType (text) {
 
 function replaceJob (text) {
   while (text !== (text = text.replace(/\[job\]([\s\S]*?)\[\/job\]/igm, function (match, p) {
-    return `<div class="job">${p}</div>`;
+    return `<div class="job-container">${p}</div>`;
   })));
   return text;
 }
@@ -110,6 +117,16 @@ function setupMarkdownIt(md) {
   ruler.push('title',{
     tag: 'title',
     wrap: wrap('div', 'class', ()=>'job-title')
+  });
+
+  ruler.push('company',{
+    tag: 'company',
+    wrap: wrap('div', 'class', ()=>'company')
+  });
+
+  ruler.push('institution',{
+    tag: 'institution',
+    wrap: wrap('div', 'class', ()=>'institution')
   });
 
   ruler.push('type',{
@@ -250,7 +267,9 @@ export function setup(helper) {
     'div.bbcoderight',
     'div.bbcodejustify',
     'font[color=*]',
+    'div.job-container',
     'div.job-title',
+    'div.company',
     'div.type',
     'div.institution',
     'div.dates',
@@ -281,6 +300,7 @@ export function setup(helper) {
   // these fix code in cooked post
   replaceBBCode("job", contents => ['div', {'class': 'job'}].concat(contents));
   replaceBBCode("school", contents => ['div', {'class': 'job'}].concat(contents));
+  replaceBBCode("company", contents => ['div', {'class': 'company'}].concat(contents));
   replaceBBCode("activity", contents => ['div', {'class': 'job'}].concat(contents));
   replaceBBCode("title", contents => ['div', {'class': 'job-title'}].concat(contents));
   replaceBBCode("type", contents => ['div', {'class': 'type'}].concat(contents));
@@ -300,6 +320,7 @@ export function setup(helper) {
   helper.addPreProcessor(replaceJob);
   helper.addPreProcessor(replaceType);
   helper.addPreProcessor(replaceSchool);
+  helper.addPreProcessor(replaceCompany);
   helper.addPreProcessor(replaceActivity);
   helper.addPreProcessor(replaceInstitution);
   helper.addPreProcessor(replaceTitle);

@@ -21,7 +21,7 @@ function initializePlugin(api)
         id: "school_button",
         group: "extras",
         icon: "university",
-        perform: e => e.applySurround('[school]', '[/school]', 'job_default_text')
+        perform: e => e.applySurround('[school]', '[/school]', 'school_default_text')
       });
     });
 

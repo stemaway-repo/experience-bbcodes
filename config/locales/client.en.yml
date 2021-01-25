@@ -2,6 +2,6 @@ en:
   js:
     composer:
       job_button_title: "Insert Job"
-      job_default_text: "\n[title]job title[/title]\n[type]Full-time[/type]\n[dates]start-end[/dates]\n[description]\n- one\n- two\n[/description]\n[logo]upload institution logo[/logo]\n"
+      job_default_text: "\n[logo]upload institution logo[/logo]\n[title]job title[/title]\n[company]Company Name[/company]\n[type]Full-time[/type]\n[dates]start-end[/dates]\n[description]\n- one\n- two\n[/description]\n"
       school_button_title: "Insert Education"
-      school_default_text: "\n[degree]job title[/degree]\n[dates]start-end[/dates]\n[grade]delete if not needed[/grade]\n[description]\n- one\n- two\n[/description]\n[logo]upload school logo[/logo]\n"
+      school_default_text: "\n[logo]upload institution logo[/logo][degree]Degree Name[/degree]\n[institution]School Name[/institution]\n[dates]start-end[/dates]\n[grade]delete if not needed[/grade]\n[description]\n- one\n- two\n[/description]\n"
