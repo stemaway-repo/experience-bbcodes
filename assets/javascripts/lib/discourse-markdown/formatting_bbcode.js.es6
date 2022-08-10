@@ -9,42 +9,63 @@ registerOption(
 function replaceTitle (text) {
   while (text !== (text = text.replace(/\[title\](.+?)\[\/title\]/ig, function (match, p) {
     return `<div class="job-title">${p}</div>`;
-  })));
+  }))){;}
+  return text;
+}
+
+function replaceSubtitle (text) {
+  while (text !== (text = text.replace(/\[subtitle\](.+?)\[\/subtitle\]/ig, function (match, p) {
+    return `<div class="subtitle">${p}</div>`;
+  }))){;}
+  return text;
+}
+
+function replaceHeader (text) {
+  while (text !== (text = text.replace(/\[header\](.+?)\[\/header\]/ig, function (match, p) {
+    return `<div class="header">${p}</div>`;
+  }))){;}
   return text;
 }
 
 function replaceCompany (text) {
   while (text !== (text = text.replace(/\[company\](.+?)\[\/company\]/ig, function (match, p) {
     return `<div class="company">${p}</div>`;
-  })));
+  }))){;}
   return text;
 }
 
 function replaceType (text) {
   while (text !== (text = text.replace(/\[type\](.+?)\[\/type\]/ig, function (match, p) {
     return `<div class="type">${p}</div>`;
-  })));
+  }))){;}
   return text;
 }
 
 function replaceJob (text) {
   while (text !== (text = text.replace(/\[job\]([\s\S]*?)\[\/job\]/igm, function (match, p) {
     return `<div class="job-container">${p}</div>`;
-  })));
+  }))){;}
   return text;
 }
 
 function replaceSchool (text) {
   while (text !== (text = text.replace(/\[school\]([\s\S]*?)\[\/school\]/igm, function (match, p) {
     return `<div class="school">${p}</div>`;
-  })));
+  }))){;}
+  return text;
+}
+
+function replaceSelfAssessment (text) {
+  while (text !== (text = text.replace(/\[assessment\]([\s\S]*?)\[\/assessment\]/igm, function (match, p) {
+    return `<div class="assessment">${p}</div>`;
+  }))){;}
   return text;
 }
 
 function replaceInstitution (text) {
   while (text !== (text = text.replace(/\[institution\](.+?)\[\/institution\]/igm, function (match, p) {
     return `<div class="institution">${p}</div>`;
-  })));
+  }))){;}
   return text;
 }
 
@@ -52,7 +73,7 @@ function replaceLogo (text) {
   console.log("replaceLogo");
   while (text !== (text = text.replace(/\[logo\](.+?)\[\/logo\]/igm, function (match, p) {
     return `<div class="logo">${p}</div>`;
-  })));
+  }))){;}
   return text;
 }
 
@@ -60,7 +81,7 @@ function replaceLocation (text) {
   console.log("replaceLocation");
   while (text !== (text = text.replace(/\[location\](.+?)\[\/location\]/igm, function (match, p) {
     return `<div class="location">${p}</div>`;
-  })));
+  }))){;}
   return text;
 }
 
@@ -68,7 +89,7 @@ function replaceDates (text) {
   console.log("replaceDates");
   while (text !== (text = text.replace(/\[dates\]DATES:(.+?)\[\/dates\]/igm, function (match, p) {
     return `<div class="dates">${p}</div>`;
-  })));
+  }))){;}
   return text;
 }
 
@@ -76,7 +97,7 @@ function replaceDescription (text) {
   console.log("replaceDescription");
   while (text !== (text = text.replace(/\[description\]([\s\S]*?)\[\/description\]/igm, function (match, p) {
     return `<div class="description">${p}</div>`;
-  })));
+  }))){;}
   return text;
 }
 
@@ -117,6 +138,16 @@ function setupMarkdownIt(md) {
   ruler.push('title',{
     tag: 'title',
     wrap: wrap('div', 'class', ()=>'job-title')
+  });
+
+  ruler.push('subtitle',{
+    tag: 'subtitle',
+    wrap: wrap('div', 'class', ()=>'subtitle')
+  });
+
+  ruler.push('header',{
+    tag: 'header',
+    wrap: wrap('div', 'class', ()=>'header')
   });
 
   ruler.push('degree',{
@@ -170,13 +201,13 @@ function setupMarkdownIt(md) {
 
   function parseAttributes(tagInfo) {
     const attributes = tagInfo.attrs._default || "";
-  
+
     return (
       parseBBCodeTag(`[wrap wrap=${attributes}]`, 0, attributes.length + 12)
         .attrs || {}
     );
   }
-  
+
 
   function applyDataAttributes(token, state, attributes) {
     Object.keys(attributes).forEach((tag) => {
@@ -184,7 +215,7 @@ function setupMarkdownIt(md) {
       tag = camelCaseToDash(
         state.md.utils.escapeHtml(tag.replace(/[^A-Za-z\-0-9]/g, ""))
       );
-  
+
       if (value && tag && tag.length > 1) {
         token.attrs.push([`data-${tag}`, value]);
       }
@@ -224,6 +255,18 @@ function setupMarkdownIt(md) {
     },
     after(state) {
       state.push("school_close", "div", -1);
+    },
+  });
+
+  blockRuler.push('block-assessment',{
+    tag: 'assessment',
+    before(state, tagInfo) {
+      let token = state.push("assessment_open", "div", 1);
+      token.attrs = [["class", "assessment"]];
+      applyDataAttributes(token, state, parseAttributes(tagInfo));
+    },
+    after(state) {
+      state.push("assessment_close", "div", -1);
     },
   });
 
@@ -290,6 +333,9 @@ export function setup(helper) {
     'div.description',
     'div.logo',
     'div.location',
+    'div.subtitle',
+    'div.header',
+    'div.assessment',
     'font[size=*]'
   ]);
 
@@ -329,6 +375,9 @@ export function setup(helper) {
   replaceBBCode("dates", contents => ['div', {'class': 'dates'}].concat(contents));
   replaceBBCode("description", contents => ['div', {'class': 'job-description'}].concat(contents));
   replaceBBCode("media", contents => ['div', {'class': 'job-media'}].concat(contents));
+  replaceBBCode("assessment", contents => ['div', {'class': 'assessment'}].concat(contents));
+  replaceBBCode("subtitle", contents => ['div', {'class': 'subtitle'}].concat(contents));
+  replaceBBCode("header", contents => ['div', {'class': 'header'}].concat(contents));
 
 // these fix display in the composer preview window
   helper.addPreProcessor(replaceFontColor);
@@ -346,5 +395,8 @@ export function setup(helper) {
   helper.addPreProcessor(replaceLocation);
   helper.addPreProcessor(replaceDates);
   helper.addPreProcessor(replaceDescription);
+  helper.addPreProcessor(replaceSelfAssessment);
+  helper.addPreProcessor(replaceSubtitle);
+  helper.addPreProcessor(replaceHeader);
 
 }

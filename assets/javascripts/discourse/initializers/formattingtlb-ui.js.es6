@@ -25,6 +25,15 @@ function initializePlugin(api)
       });
     });
 
+    api.onToolbarCreate((toolbar) => {
+      toolbar.addButton({
+        id: "self_assessment_button",
+        group: "extras",
+        icon: "tasks",
+        perform: e =>e.applySurround('[assessment]', '[/assessment]', 'self_assessment_default_text')
+      });
+    });
+
   }
 }
 
