@@ -6,17 +6,17 @@ registerOption(
 );
 
 function replaceTitle(text) {
-  while (
+  while {
     text !==
     (text = text.replace(/\[title\](.+?)\[\/title\]/gi, function (match, p) {
       return `<div class="job-title">${p}</div>`;
     }))
-  );
+  };
   return text;
 }
 
 function replaceCompany(text) {
-  while (
+  while {
     text !==
     (text = text.replace(
       /\[company\](.+?)\[\/company\]/gi,
@@ -24,32 +24,32 @@ function replaceCompany(text) {
         return `<div class="company">${p}</div>`;
       }
     ))
-  );
+    };
   return text;
 }
 
 function replaceType(text) {
-  while (
+  while {
     text !==
     (text = text.replace(/\[type\](.+?)\[\/type\]/gi, function (match, p) {
       return `<div class="type">${p}</div>`;
     }))
-  );
+  };
   return text;
 }
 
 function replaceJob(text) {
-  while (
+  while {
     text !==
     (text = text.replace(/\[job\]([\s\S]*?)\[\/job\]/gim, function (match, p) {
       return `<div class="job-container">${p}</div>`;
     }))
-  );
+  };
   return text;
 }
 
 function replaceSchool(text) {
-  while (
+  while {
     text !==
     (text = text.replace(
       /\[school\]([\s\S]*?)\[\/school\]/gim,
@@ -57,12 +57,12 @@ function replaceSchool(text) {
         return `<div class="school">${p}</div>`;
       }
     ))
-  );
+  };
   return text;
 }
 
 function replaceInstitution(text) {
-  while (
+  while {
     text !==
     (text = text.replace(
       /\[institution\](.+?)\[\/institution\]/gim,
@@ -70,24 +70,24 @@ function replaceInstitution(text) {
         return `<div class="institution">${p}</div>`;
       }
     ))
-  );
+  };
   return text;
 }
 
 function replaceLogo(text) {
   console.log("replaceLogo");
-  while (
+  while {
     text !==
     (text = text.replace(/\[logo\](.+?)\[\/logo\]/gim, function (match, p) {
       return `<div class="logo">${p}</div>`;
     }))
-  );
+  };
   return text;
 }
 
 function replaceLocation(text) {
   console.log("replaceLocation");
-  while (
+  while {
     text !==
     (text = text.replace(
       /\[location\](.+?)\[\/location\]/gim,
@@ -95,13 +95,13 @@ function replaceLocation(text) {
         return `<div class="location">${p}</div>`;
       }
     ))
-  );
+  };
   return text;
 }
 
 function replaceDates(text) {
   console.log("replaceDates");
-  while (
+  while {
     text !==
     (text = text.replace(
       /\[dates\]DATES:(.+?)\[\/dates\]/gim,
@@ -109,13 +109,13 @@ function replaceDates(text) {
         return `<div class="dates">${p}</div>`;
       }
     ))
-  );
+  };
   return text;
 }
 
 function replaceDescription(text) {
   console.log("replaceDescription");
-  while (
+  while {
     text !==
     (text = text.replace(
       /\[description\]([\s\S]*?)\[\/description\]/gim,
@@ -123,7 +123,7 @@ function replaceDescription(text) {
         return `<div class="description">${p}</div>`;
       }
     ))
-  );
+    };
   return text;
 }
 

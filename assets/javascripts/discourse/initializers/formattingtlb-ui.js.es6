@@ -28,7 +28,7 @@ function initializePlugin(api) {
 
 export default {
   name: "formattingtlb-ui",
-  initialize(container) {
-    withPluginApi("0.1", (api) => initializePlugin(api), {});
+  initialize: function () {
+    withPluginApi("0.1", (api) => initializePlugin(api));
   },
 };
