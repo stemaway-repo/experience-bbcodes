@@ -5,128 +5,6 @@ registerOption(
   (siteSettings, opts) => (opts.features["formatting_bbcode"] = true)
 );
 
-function replaceTitle(text) {
-  while {
-    text !==
-    (text = text.replace(/\[title\](.+?)\[\/title\]/gi, function (match, p) {
-      return `<div class="job-title">${p}</div>`;
-    }))
-  };
-  return text;
-}
-
-function replaceCompany(text) {
-  while {
-    text !==
-    (text = text.replace(
-      /\[company\](.+?)\[\/company\]/gi,
-      function (match, p) {
-        return `<div class="company">${p}</div>`;
-      }
-    ))
-    };
-  return text;
-}
-
-function replaceType(text) {
-  while {
-    text !==
-    (text = text.replace(/\[type\](.+?)\[\/type\]/gi, function (match, p) {
-      return `<div class="type">${p}</div>`;
-    }))
-  };
-  return text;
-}
-
-function replaceJob(text) {
-  while {
-    text !==
-    (text = text.replace(/\[job\]([\s\S]*?)\[\/job\]/gim, function (match, p) {
-      return `<div class="job-container">${p}</div>`;
-    }))
-  };
-  return text;
-}
-
-function replaceSchool(text) {
-  while {
-    text !==
-    (text = text.replace(
-      /\[school\]([\s\S]*?)\[\/school\]/gim,
-      function (match, p) {
-        return `<div class="school">${p}</div>`;
-      }
-    ))
-  };
-  return text;
-}
-
-function replaceInstitution(text) {
-  while {
-    text !==
-    (text = text.replace(
-      /\[institution\](.+?)\[\/institution\]/gim,
-      function (match, p) {
-        return `<div class="institution">${p}</div>`;
-      }
-    ))
-  };
-  return text;
-}
-
-function replaceLogo(text) {
-  console.log("replaceLogo");
-  while {
-    text !==
-    (text = text.replace(/\[logo\](.+?)\[\/logo\]/gim, function (match, p) {
-      return `<div class="logo">${p}</div>`;
-    }))
-  };
-  return text;
-}
-
-function replaceLocation(text) {
-  console.log("replaceLocation");
-  while {
-    text !==
-    (text = text.replace(
-      /\[location\](.+?)\[\/location\]/gim,
-      function (match, p) {
-        return `<div class="location">${p}</div>`;
-      }
-    ))
-  };
-  return text;
-}
-
-function replaceDates(text) {
-  console.log("replaceDates");
-  while {
-    text !==
-    (text = text.replace(
-      /\[dates\]DATES:(.+?)\[\/dates\]/gim,
-      function (match, p) {
-        return `<div class="dates">${p}</div>`;
-      }
-    ))
-  };
-  return text;
-}
-
-function replaceDescription(text) {
-  console.log("replaceDescription");
-  while {
-    text !==
-    (text = text.replace(
-      /\[description\]([\s\S]*?)\[\/description\]/gim,
-      function (match, p) {
-        return `<div class="description">${p}</div>`;
-      }
-    ))
-    };
-  return text;
-}
-
 function wrap(tag, attr, callback) {
   return function (startToken, finishToken, tagInfo) {
     startToken.tag = finishToken.tag = tag;
@@ -353,10 +231,8 @@ export function setup(helper) {
   const builders = requirejs(
     "pretty-text/engines/discourse-markdown/bbcode"
   ).builders;
-  const { register, replaceBBCode, rawBBCode, replaceBBCodeParamsRaw } =
-    builders(helper);
+  const { replaceBBCode } = builders(helper);
 
-  // these fix code in cooked post
   replaceBBCode("job", (contents) =>
     ["div", { class: "job" }].concat(contents)
   );
@@ -408,21 +284,4 @@ export function setup(helper) {
   replaceBBCode("media", (contents) =>
     ["div", { class: "job-media" }].concat(contents)
   );
-
-  // these fix display in the composer preview window
-  helper.addPreProcessor(replaceFontColor);
-  helper.addPreProcessor(replaceFontSize);
-  helper.addPreProcessor(replaceJob);
-  helper.addPreProcessor(replaceType);
-  helper.addPreProcessor(replaceSchool);
-  helper.addPreProcessor(replaceGrade);
-  helper.addPreProcessor(replaceDegree);
-  helper.addPreProcessor(replaceCompany);
-  helper.addPreProcessor(replaceActivity);
-  helper.addPreProcessor(replaceInstitution);
-  helper.addPreProcessor(replaceTitle);
-  helper.addPreProcessor(replaceLogo);
-  helper.addPreProcessor(replaceLocation);
-  helper.addPreProcessor(replaceDates);
-  helper.addPreProcessor(replaceDescription);
 }
