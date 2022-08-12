@@ -1,47 +1,34 @@
-import { withPluginApi } from 'discourse/lib/plugin-api';
-import { onToolbarCreate } from 'discourse/components/d-editor';
+import { withPluginApi } from "discourse/lib/plugin-api";
+// import { onToolbarCreate } from 'discourse/components/d-editor';
 
-function initializePlugin(api)
-{
-  const siteSettings = api.container.lookup('site-settings:main');
+function initializePlugin(api) {
+  const siteSettings = api.container.lookup("site-settings:main");
 
   if (siteSettings.formattingtlb_enabled) {
-
-    api.onToolbarCreate(toolbar => {
-        toolbar.addButton({
-          id: "job_button",
-          group: "extras",
-          icon: "building",
-          perform: e => e.applySurround('[job]', '[/job]', 'job_default_text')
-        });
-    });
-
-    api.onToolbarCreate(toolbar => {
+    api.onToolbarCreate((toolbar) => {
       toolbar.addButton({
-        id: "school_button",
+        id: "job_button",
         group: "extras",
-        icon: "university",
-        perform: e => e.applySurround('[school]', '[/school]', 'school_default_text')
+        icon: "building",
+        perform: (e) => e.applySurround("[job]", "[/job]", "job_default_text"),
       });
     });
 
     api.onToolbarCreate((toolbar) => {
       toolbar.addButton({
-        id: "self_assessment_button",
+        id: "school_button",
         group: "extras",
-        icon: "tasks",
-        perform: e =>e.applySurround('[assessment]', '[/assessment]', 'self_assessment_default_text')
+        icon: "university",
+        perform: (e) =>
+          e.applySurround("[school]", "[/school]", "school_default_text"),
       });
     });
-
   }
 }
 
-export default
-{
-  name: 'formattingtlb-ui',
-  initialize(container)
-  {
-    withPluginApi('0.1', api => initializePlugin(api), { noApi: () => priorToApi(container) });
-  }
+export default {
+  name: "formattingtlb-ui",
+  initialize: function () {
+    withPluginApi("0.1", (api) => initializePlugin(api));
+  },
 };
