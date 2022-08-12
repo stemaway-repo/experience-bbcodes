@@ -91,6 +91,21 @@ function setupMarkdownIt(md) {
     wrap: wrap("div", "class", () => "dates"),
   });
 
+  ruler.push("title", {
+    tag: "title",
+    wrap: wrap("div", "class", () => "job-title"),
+  });
+
+  ruler.push("subtitle", {
+    tag: "subtitle",
+    wrap: wrap("div", "class", () => "subtitle"),
+  });
+
+  ruler.push("header", {
+    tag: "header",
+    wrap: wrap("div", "class", () => "header"),
+  });
+
   function camelCaseToDash(str) {
     return str.replace(/([a-zA-Z])(?=[A-Z])/g, "$1-").toLowerCase();
   }
@@ -153,6 +168,18 @@ function setupMarkdownIt(md) {
     },
   });
 
+  blockRuler.push("block-assessment", {
+    tag: "assessment",
+    before(state, tagInfo) {
+      let token = state.push("assessment_open", "div", 1);
+      token.attrs = [["class", "assessment"]];
+      applyDataAttributes(token, state, parseAttributes(tagInfo));
+    },
+    after(state) {
+      state.push("assessment_close", "div", -1);
+    },
+  });
+
   ruler.push("floatl", {
     tag: "floatl",
     wrap: wrap("div", "class", () => "floatl"),
@@ -212,6 +239,9 @@ export function setup(helper) {
     "div.description",
     "div.logo",
     "div.location",
+    "div.subtitle",
+    "div.header",
+    "div.assessment",
     "font[size=*]",
   ]);
 
@@ -283,5 +313,14 @@ export function setup(helper) {
   );
   replaceBBCode("media", (contents) =>
     ["div", { class: "job-media" }].concat(contents)
+  );
+  replaceBBCode("assessment", (contents) =>
+    ["div", { class: "assessment" }].concat(contents)
+  );
+  replaceBBCode("subtitle", (contents) =>
+    ["div", { class: "subtitle" }].concat(contents)
+  );
+  replaceBBCode("header", (contents) =>
+    ["div", { class: "header" }].concat(contents)
   );
 }
