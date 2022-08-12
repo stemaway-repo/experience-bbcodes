@@ -228,9 +228,8 @@ export function setup(helper) {
     return;
   }
 
-  const builders = requirejs(
-    "pretty-text/engines/discourse-markdown/bbcode"
-  ).builders;
+  const builders = requirejs("pretty-text/engines/discourse-markdown/bbcode")
+    .builders;
   const { replaceBBCode } = builders(helper);
 
   replaceBBCode("job", (contents) =>
