@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # name: stemaway-experience-bbcodes
 # about: Add formatting options on your post (Discourse)
 # version: 3.2
