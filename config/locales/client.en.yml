@@ -10,7 +10,7 @@ en:
         \n[degree]Self Assessment[/degree]
         \n[title]Project Title[/title]
         \n[subtitle]An optional subtitle describing your project and/or your experience. The subtitle should be short and eye-catching.[/subtitle]
-        \n[grade]Mentor Chains® Role:<your role>[/grade]
+        \n[grade]Mentor Chains® Role:**your role**[/grade]
         \n[header]Goals for the internship[/header]
         \n[description]
         \n- one
