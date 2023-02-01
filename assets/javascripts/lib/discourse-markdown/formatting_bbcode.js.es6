@@ -1,9 +1,4 @@
-import { registerOption } from "pretty-text/pretty-text";
 import { parseBBCodeTag } from "pretty-text/engines/discourse-markdown/bbcode-block";
-
-registerOption(
-  (siteSettings, opts) => (opts.features["formatting_bbcode"] = true)
-);
 
 function wrap(tag, attr, callback) {
   return function (startToken, finishToken, tagInfo) {
@@ -217,6 +212,9 @@ function setupMarkdownIt(md) {
 }
 
 export function setup(helper) {
+  helper.registerOptions(
+    (opts, siteSettings) => (opts.features["formatting_bbcode"] = true)
+  );
   helper.allowList([
     "div.floatl",
     "div.floatr",
