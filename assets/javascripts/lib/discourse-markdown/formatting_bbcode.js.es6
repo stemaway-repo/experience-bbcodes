@@ -212,9 +212,7 @@ function setupMarkdownIt(md) {
 }
 
 export function setup(helper) {
-  helper.registerOptions(
-    (opts, siteSettings) => (opts.features["formatting_bbcode"] = true)
-  );
+  helper.registerOptions((opts) => (opts.features["formatting_bbcode"] = true));
   helper.allowList([
     "div.floatl",
     "div.floatr",
