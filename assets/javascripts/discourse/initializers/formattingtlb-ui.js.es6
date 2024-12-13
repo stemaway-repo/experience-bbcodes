@@ -1,5 +1,4 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
-// import { onToolbarCreate } from 'discourse/components/d-editor';
 
 function initializePlugin(api) {
   const siteSettings = api.container.lookup("site-settings:main");
@@ -10,7 +9,8 @@ function initializePlugin(api) {
         id: "job_button",
         group: "extras",
         icon: "building",
-        perform: (e) => e.applySurround("[job]", "[/job]", "job_default_text"),
+        perform: (e) =>
+          e.applySurround("[job]", "[/job]", "job_default_text"),
       });
     });
 
@@ -35,6 +35,26 @@ function initializePlugin(api) {
             "[/assessment]",
             "self_assessment_default_text"
           ),
+      });
+    });
+
+    api.onToolbarCreate((toolbar) => {
+      toolbar.addButton({
+        id: "project_button",
+        group: "extras",
+        icon: "code",
+        perform: (e) =>
+          e.applySurround("[project]", "[/project]", "project_default_text"),
+      });
+    });
+
+    api.onToolbarCreate((toolbar) => {
+      toolbar.addButton({
+        id: "skills_button",
+        group: "extras",
+        icon: "cogs",
+        perform: (e) =>
+          e.applySurround("[skills]", "[/skills]", "skills_default_text"),
       });
     });
   }

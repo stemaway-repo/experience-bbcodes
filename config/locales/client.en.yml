@@ -4,7 +4,11 @@ en:
       job_button_title: "Insert Job"
       job_default_text: "\n[logo]upload institution logo[/logo]\n[title]job title[/title]\n[company]Company Name[/company]\n[type]Full-time[/type]\n[dates]start-end[/dates]\n[description]\n- one\n- two\n[/description]\n"
       school_button_title: "Insert Education"
-      school_default_text: "\n[logo]upload institution logo[/logo][degree]Degree Name[/degree]\n[institution]School Name[/institution]\n[dates]start-end[/dates]\n[grade]delete if not needed[/grade]\n[description]\n- one\n- two\n[/description]\n"
+      school_default_text: "\n[logo]upload institution logo[/logo]\n[degree]Degree Name[/degree]\n[institution]School Name[/institution]\n[dates]start-end[/dates]\n[grade]delete if not needed[/grade]\n[description]\n- one\n- two\n[/description]\n"
+      project_button_title: "Insert Project"
+      project_default_text: "\n[logo]upload project logo[/logo]\n[title]Project Title[/title]\n[type]Project Type (e.g., Individual, Team)[/type]\n[dates]start-end[/dates]\n[description]\n- one\n- two\n- three\n[/description]\n"
+      skills_button_title: "Insert Skills"
+      skills_default_text: "\n[logo]upload skills logo[/logo]\n[title]Skills Title[/title]\n[skills]Skill 1[/skills]\n[skills]Skill 2[/skills]\n[skills]Skill 3[/skills]\n[description]\n- Example use case or context of these skills\n- one\n- two\n- three\n[/description]\n"
       self_assessment_button_title: "Insert Self Assessment"
       self_assessment_default_text: "
         \n[degree]Self Assessment[/degree]
