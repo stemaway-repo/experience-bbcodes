@@ -35,7 +35,7 @@
   margin-bottom: 1em;
 }
 
-@media (max-width: 960px) {
+@media (width <= 960px) {
   .d-editor-button-bar button.bullet,
   .d-editor-button-bar button.list,
   .d-editor-button-bar button.left_ui_button,
@@ -46,7 +46,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .d-editor-button-bar button.addimg_ui_button,
   .d-editor-button-bar button.floatl_ui_button {
     display: none;

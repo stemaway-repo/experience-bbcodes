@@ -1,6 +1,16 @@
 fr:
   js:
     composer:
+      job_button_title: "Insérer une expérience"
+      job_default_text: "\n[logo]téléverser le logo de l’entreprise[/logo]\n[title]intitulé du poste[/title]\n[company]Nom de l’entreprise[/company]\n[type]Temps plein[/type]\n[dates]début-fin[/dates]\n[description]\n- un\n- deux\n[/description]\n"
+      school_button_title: "Insérer une formation"
+      school_default_text: "\n[logo]téléverser le logo de l’établissement[/logo]\n[degree]Nom du diplôme[/degree]\n[institution]Nom de l’établissement[/institution]\n[dates]début-fin[/dates]\n[grade]supprimer si inutile[/grade]\n[description]\n- un\n- deux\n[/description]\n"
+      project_button_title: "Insérer un projet"
+      project_default_text: "\n[logo]téléverser le logo du projet[/logo]\n[title]Titre du projet[/title]\n[type]Type de projet (ex. : individuel, équipe)[/type]\n[dates]début-fin[/dates]\n[description]\n- un\n- deux\n- trois\n[/description]\n"
+      skills_button_title: "Insérer des compétences"
+      skills_default_text: "\n[logo]téléverser le logo des compétences[/logo]\n[title]Titre des compétences[/title]\n[skills]Compétence 1[/skills]\n[skills]Compétence 2[/skills]\n[skills]Compétence 3[/skills]\n[description]\n- Exemple de cas d’usage ou de contexte pour ces compétences\n- un\n- deux\n- trois\n[/description]\n"
+      self_assessment_button_title: "Insérer une auto-évaluation"
+      self_assessment_default_text: "\n[degree]Auto-évaluation[/degree]\n[title]Titre du projet[/title]\n[subtitle]Un sous-titre facultatif décrivant votre projet et/ou votre expérience. Il doit être court et percutant.[/subtitle]\n[grade]Parcours : votre parcours[/grade]\n\n[grade]Rôle Mentor Chains® : votre rôle[/grade]\n[header]Objectifs du stage[/header]\n[description]\n- un\n- deux\n- trois\n[/description]\n[header]Faits marquants[/header]\n[description]\nAperçu concis des éléments appris\n- un\n- deux\n- trois\n[/description]\n[header]Difficultés rencontrées[/header]\n[description]\nAperçu concis des difficultés rencontrées\n- un\n- deux\n[/description]\n[header]Déclaration détaillée[/header]\n[description]\nDécrivez en détail les tâches effectuées, les obstacles rencontrés le cas échéant et la manière dont vous les avez résolus.\n[/description]\n"
       underline_ui_button_title: "Souligner du texte"
       underline_ui_default_text: "Texte"
       color_ui_button_title: "Colorer un texte"

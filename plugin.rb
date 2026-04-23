@@ -11,7 +11,8 @@ enabled_site_setting :formattingtlb_enabled
 register_asset 'stylesheets/formatting.scss'
 
 # Register icons for toolbar buttons
-register_svg_icon "fa-university" if respond_to?(:register_svg_icon)
-register_svg_icon "fa-building" if respond_to?(:register_svg_icon)
-register_svg_icon "fa-code" if respond_to?(:register_svg_icon)
-register_svg_icon "fa-cogs" if respond_to?(:register_svg_icon)
+register_svg_icon "graduation-cap" if respond_to?(:register_svg_icon)
+register_svg_icon "building" if respond_to?(:register_svg_icon)
+register_svg_icon "code" if respond_to?(:register_svg_icon)
+register_svg_icon "clipboard-check" if respond_to?(:register_svg_icon)
+register_svg_icon "gear" if respond_to?(:register_svg_icon)

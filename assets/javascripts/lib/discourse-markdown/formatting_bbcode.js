@@ -91,7 +91,7 @@ function setupMarkdownIt(md) {
 
   blockRuler.push("block-job", {
     tag: "job",
-    before(state, tagInfo) {
+    before(state) {
       let token = state.push("job_open", "div", 1);
       token.attrs = [["class", "job"]];
       token.content = "";
@@ -103,7 +103,7 @@ function setupMarkdownIt(md) {
 
   blockRuler.push("block-description", {
     tag: "description",
-    before(state, tagInfo) {
+    before(state) {
       let token = state.push("description_open", "div", 1);
       token.attrs = [["class", "description"]];
       token.content = "";
@@ -115,7 +115,7 @@ function setupMarkdownIt(md) {
 
   blockRuler.push("block-school", {
     tag: "school",
-    before(state, tagInfo) {
+    before(state) {
       let token = state.push("school_open", "div", 1);
       token.attrs = [["class", "school"]];
       token.content = "";
@@ -127,7 +127,7 @@ function setupMarkdownIt(md) {
 
   blockRuler.push("block-assessment", {
     tag: "assessment",
-    before(state, tagInfo) {
+    before(state) {
       let token = state.push("assessment_open", "div", 1);
       token.attrs = [["class", "assessment"]];
       token.content = "";
@@ -139,7 +139,7 @@ function setupMarkdownIt(md) {
 
   blockRuler.push("block-project", {
     tag: "project",
-    before(state, tagInfo) {
+    before(state) {
       let token = state.push("project_open", "div", 1);
       token.attrs = [["class", "project"]];
       token.content = "";
@@ -151,7 +151,7 @@ function setupMarkdownIt(md) {
 
   blockRuler.push("block-skills", {
     tag: "skills",
-    before(state, tagInfo) {
+    before(state) {
       let token = state.push("skills_open", "div", 1);
       token.attrs = [["class", "skills"]];
       token.content = "";

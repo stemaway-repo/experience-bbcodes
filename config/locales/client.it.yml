@@ -1,6 +1,16 @@
 it:
   js:
     composer:
+      job_button_title: "Inserisci esperienza"
+      job_default_text: "\n[logo]carica il logo dell’azienda[/logo]\n[title]titolo del ruolo[/title]\n[company]Nome azienda[/company]\n[type]Tempo pieno[/type]\n[dates]inizio-fine[/dates]\n[description]\n- uno\n- due\n[/description]\n"
+      school_button_title: "Inserisci formazione"
+      school_default_text: "\n[logo]carica il logo dell’istituto[/logo]\n[degree]Nome del titolo di studio[/degree]\n[institution]Nome dell’istituto[/institution]\n[dates]inizio-fine[/dates]\n[grade]elimina se non necessario[/grade]\n[description]\n- uno\n- due\n[/description]\n"
+      project_button_title: "Inserisci progetto"
+      project_default_text: "\n[logo]carica il logo del progetto[/logo]\n[title]Titolo del progetto[/title]\n[type]Tipo di progetto (es. individuale, team)[/type]\n[dates]inizio-fine[/dates]\n[description]\n- uno\n- due\n- tre\n[/description]\n"
+      skills_button_title: "Inserisci competenze"
+      skills_default_text: "\n[logo]carica il logo delle competenze[/logo]\n[title]Titolo competenze[/title]\n[skills]Competenza 1[/skills]\n[skills]Competenza 2[/skills]\n[skills]Competenza 3[/skills]\n[description]\n- Esempio di utilizzo o contesto per queste competenze\n- uno\n- due\n- tre\n[/description]\n"
+      self_assessment_button_title: "Inserisci autovalutazione"
+      self_assessment_default_text: "\n[degree]Autovalutazione[/degree]\n[title]Titolo del progetto[/title]\n[subtitle]Un sottotitolo facoltativo che descrive il tuo progetto e/o la tua esperienza. Deve essere breve e incisivo.[/subtitle]\n[grade]Percorso: il tuo percorso[/grade]\n\n[grade]Ruolo Mentor Chains®: il tuo ruolo[/grade]\n[header]Obiettivi dello stage[/header]\n[description]\n- uno\n- due\n- tre\n[/description]\n[header]Risultati principali[/header]\n[description]\nBreve panoramica di ciò che hai imparato\n- uno\n- due\n- tre\n[/description]\n[header]Sfide affrontate[/header]\n[description]\nBreve panoramica delle difficoltà incontrate\n- uno\n- due\n[/description]\n[header]Dichiarazione dettagliata[/header]\n[description]\nDescrivi in dettaglio le attività svolte, gli ostacoli incontrati se presenti e come li hai risolti.\n[/description]\n"
       underline_ui_button_title: "Sottolinea testo"
       underline_ui_default_text: "Testo"
       color_ui_button_title: "Colora testo"
